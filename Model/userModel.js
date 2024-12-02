@@ -1,31 +1,93 @@
-const database = require('../databaseSetup.js');
+const database = require('../DB/databaseSetup');
 const mysql = require('mysql2');
 const db = mysql
+const bcrypt = require('bcrypt');
+const express = require('express');
+const session = require('express-session');
 
 
-const login = (username, password) => {
+
+
+const login = (req, username, password) => {
     return new Promise((resolve, reject) => {
-        const query = 'SELECT * FROM users WHERE username = ? AND password = ?';
-        database.query(query, [username, password], (err, results) => {
-            if (err) return reject(err);
-            if (results.length === 0) resolve(null); //means no user found
-            else resolve(results[0]); // return user data if login is succesful
+        // Step 1: Query the database for the user by username
+        const query = 'SELECT id, password FROM users WHERE username = ?';
+        database.query(query, [username], (err, results) => {
+            if (err) {
+                console.error('Database error:', err);
+                return reject(err);
+            }
 
+            if (results.length === 0) {
+                // No user found
+                return resolve(null);
+            }
+
+            const user = results[0]; // Extract the user data (id and hashed password)
+            
+            console.log("Password input ", password)
+
+            console.log("Exisitng user in db", user)
+            // Step 2: Compare the provided password with the hashed password
+            bcrypt.compare(password, user.password, (err, isMatch) => {
+                if (err) {
+                    console.error('Bcrypt error:', err);
+                    return reject(err);
+                }
+
+                if (!isMatch) {
+                    // Password does not match
+                    return resolve(null);
+                }
+
+                // Step 3: Successful login, return the user ID
+                resolve(user.id);
+            });
         });
     });
 };
+
+
+    
+
 
 // registering a new user
 
 const register = (username, email, password) => {
     return new Promise((resolve, reject) => {
-        const query = 'INSERT INTO users (username, email, password, rank, points) VALUES (?, ?, ?, "Genin", 0)';
-        database.query(query, [username, email, password], (err, result) => {
+        // Step 1: Check if user already exists based on username
+        const query1 = 'SELECT username FROM users WHERE username = ?';
+        database.query(query1, [username], async (err, result) => {
             if (err) return reject(err);
-            resolve({ id: result.insertId, username, email, rank: "Genin", points: 0 }); // responding with new user data
+
+            if (result.length > 0) {
+                // User already exists  
+                return reject(new Error('User already exists'));
+            }
+           
+            // step 2 - hash password
+            const hashedPassword = await bcrypt.hash(password, 10)
+            
+            console.log("User does not exist. Proceeding to register...");
+        
+
+            // Step 3: Insert new user into the database
+            const query2 = 'INSERT INTO users (username, email, password, points) VALUES (?, ?, ?, 0)';
+            database.query(query2, [username, email, hashedPassword], (err, result) => {
+                if (err) return reject(err);
+
+                // Respond with the new user data
+                resolve({
+                    id: result.insertId, // The ID of the newly inserted user
+                    username,
+                    email,
+                    points: 0
+                });
+            });
         });
     });
 };
+
 
 // fetching user's profile
 
