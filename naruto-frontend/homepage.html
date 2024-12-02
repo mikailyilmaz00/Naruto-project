@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/homepage.css">
+    <title>Shinobi World</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+</head>
+<body>
+
+    
+
+    <!-- Sidebar for navigation -->
+    <div class="sidebar">
+        <h2>Dattebayo</h2>
+        <a href="profile.html">Profile</a>
+        <a href="Quiz.html">Quiz of the day</a>
+        <a href="minigames.html">Missions</a>
+    </div>
+
+    <header class="header">
+        <div class="logo">
+            <img src="./images/uchiha.png" alt="Konoha Logo">
+        </div>
+        <nav class="navbar">
+            <a href="homepage.html">Home</a>
+            <a href="Quiz.html">Quiz</a>
+            <a href="minigames.html">Missions</a>
+            <a href="login.html">Login</a>
+        </nav>
+    </header>
+    
+    <main class="content">
+        <section id="home" class="home-section">
+            <h1>Welcome to Naruto World</h1>
+            <p>Embark on your journey as a ninja and explore missions, quizzes, and games.</p>
+        </section>
+
+        <section id="quiz" class="quiz-section">
+            <h2>Which Ninja Are You?</h2>
+            <p>Take the quiz to find out which Naruto character matches your personality!</p>
+            <button onclick="window.location.href='minigames.html';" id="quizBtn" class="btn quiz-btn">Start Quiz</button>
+
+        </section>
+
+        <section id="missions" class="missions-section">
+            <h2>Random Missions</h2>
+            <p>Receive exciting missions to prove your ninja skills!</p>
+            <div id="mission-container"></div> <!-- Placeholder for mission elements -->
+            <button onclick="window.location.href='mission2.html';" class="btn mission-btn">Get Mission</button>
+        </section>
+
+        <section id="about" class="about-section">
+            <h2>About</h2>
+            <p>This site is created for Naruto fans to explore the world of ninjas and have fun!</p>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>© 2024 Naruto World. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        
+        const missions = [
+            { title: 'Which Ninja Are You?', difficulty: 'Easy' },
+            { title: 'Feed Naruto', difficulty: 'Intermediate' },
+        
+        ];
+
+        const missionContainer = document.getElementById('mission-container');
+
+        // Appending missions elements to the homepage 
+        missions.forEach((mission, index) => {
+            const missionElement = document.createElement('div');
+            missionElement.classList.add('mission');
+            missionElement.innerHTML = `
+                <h3>Mission ${index + 1}: ${mission.title}</h3>
+                <p>Difficulty: ${mission.difficulty}</p>
+            `;
+            missionContainer.appendChild(missionElement);
+        });
+
+        
+        // document.querySelectorAll('.mission').forEach(mission => {
+        //     mission.addEventListener('click', () => {
+        //         alert(`Selected mission: ${mission.querySelector('h3').textContent}`);
+        //         // Add  backend request code here
+        //     });
+        // });
+
+        // document.getElementById('quizBtn').onclick = function() {
+        // window.Location.href= 'minigames.html'; 
+        //     console.log('la hero');
+        // }
+
+    </script>
+</body>
+</html>

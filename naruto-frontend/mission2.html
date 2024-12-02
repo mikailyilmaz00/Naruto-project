@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/mission2.css"> 
+    <title>2nd mission</title>
+</head>
+<body>
+
+    <div id="naruto" class="jump-animation"></div>
+
+
+    <div id="ramenBowl"></div>
+    <div id="gameArea"></div>
+ <h1 id="score">0</h1>
+
+
+
+
+    <script>
+
+const naruto = document.getElementById('naruto');
+const ramenBowl = document.getElementById('ramenBowl');
+const score = document.getElementById('score');
+
+function jump() {
+    naruto.classList.remove('jump-animation');
+ 
+    void naruto.offsetWidth;
+    naruto.classList.add('jump-animation');
+        setTimeout(() => {
+            naruto.classList.remove('jump-animation');
+        }, 700);
+    }
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === ' ') { // Making Naruto jump on spacebar
+        console.log('key pressed');
+        jump();
+    }
+
+});
+
+
+let narutoPosition = 200;
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === "ArrowLeft") {
+        narutoPosition -= 10; 
+       
+    
+    } else if (event.key === "ArrowRight") {
+        narutoPosition += 10;
+    
+    }
+
+    if (narutoPosition < 0) narutoPosition = 0;
+    // if (narutoPosition > gameWidth - narutoWidth) NarutoPosition = gameWidth - narutoWidth;
+
+    document.getElementById('naruto').style.left = narutoPosition + 'px';
+}); 
+
+// document.addEventListener('keydown', () => {
+//     if(!naruto.classList.contains('jump-animation')) {
+//         jump();
+//     }
+// })
+
+
+    </script>
+    
+</body>
+</html>

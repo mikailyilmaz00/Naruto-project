@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/minigames.css"> 
+    <title>Phasmophobia</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <body>
+
+        <form id="ninjaSelector" >
+        <section class="foodChoices">
+            <span> What food do you like? </span>
+            <br>
+            <input type="radio" name="food" id="foodPill" value="foodPill">
+            <label for="foodPill">Food pill</label>
+            <input type="radio" name="food" id="ramen" value="ramen">
+            <label for="ramen">Ramen</label>
+            <input type="radio" name="food" id="tomato" value="tomato">
+            <label for="tomato">Tomato</label>
+          </section>
+          <hr>
+              
+        <section class="eyes">
+            <span>Do you have special eyes?</span>
+            <br>
+            <input type="radio" name="eye" id="yes" value="yes">
+            <label for="yes">Yes</label>
+            <input type="radio" name="eye" id="no" value="no">
+            <label for="no">No</label>
+          </section>
+          <hr>
+              
+        <section class="clan">
+            <span>Does your clan have special powers</span>
+            <br>
+            <input type="radio" name="clan" id="no" value="yes">
+            <label for="yes">Yes</label>
+            <input type="radio" name="clan" id="no" value="yes">
+            <label for="no">No</label>
+          </section>
+          <hr>
+         
+          <section class="medical">
+            <span>Do you do medical ninjutsu?</span>
+            <br>
+            <input type="radio" name="medical" id="yes" value="yes">
+            <label for="yes">Yes</label>
+            <input type="radio" name="medical" id="no" value="no">
+            <label for="no">No</label>
+          </section>
+          <hr>
+         
+          <section class="sibling">
+            <span>Do you have siblings?</span>
+            <br>
+            <input type="radio" name="sibling" id="yes" value="yes">
+            <label for="yes">Yes</label>
+            <input type="radio" name="sibling" id="no" value="no">
+            <label for="no">No</label>
+          </section>
+          <hr>
+
+        
+          <button class="ninja"> Find out which ninja you are </button>
+          
+          <button onclick="window.location.href='mission2.html';" id="newMissionBtn"> Move on to the next mission </button>
+          <div id="result" style="display: none;">
+            <h2>You are: <span id="ninjaResult"></span></h2>
+            
+          </div>
+          
+        </form>
+
+
+<script>
+
+// missions.forEach(mission => {
+//     // needs html elements for mission titles, difficulty etc.
+//     //append to a container in the DOM
+// })
+
+// // for missions selection and details
+// document.querySelectorAll('.mission').forEach(mission => {
+//     mission.addEventListener('click', () => {
+//         // send req to backend and update mission's display
+//     })
+// })
+
+
+
+
+// let ninja = document.getElementById('ninjaSelector')
+// let food = document.getElementsByClassName('food')
+// const eyes = document.getElementsByClassName('eyes')
+// const clan = document.getElementsByClassName('clan')
+// const medical = document.getElementsByClassName('medical')
+// const sibling = document.getElementsByClassName('sibling')
+
+ const ninjaSelector = document.getElementById('ninjaSelector')
+ninjaSelector.addEventListener('submit', (e) => {
+    e.preventDefault();
+  //  document.querySelector('#foodPill').value;
+  //  console.log(food);
+
+
+const foodChoices = Array.from(
+  document.querySelectorAll('input[name="food"]:checked')
+).map((input) => input.value);
+
+const eyes = document.querySelector('input[name="eye"]:checked')?.value;
+const clan = document.querySelector('input[name="clan"]:checked')?.value;
+const medical = document.querySelector('input[name="medical"]:checked')?.value;
+const sibling = document.querySelector('input[name="sibling"]:checked')?.value;
+
+const ninjaType = determineNinjaType(foodChoices, eyes, clan, medical, sibling);
+
+const ninjaResult = document.getElementById('ninjaResult');
+const resultContainer = document.getElementById('result');
+
+ninjaResult.textContent = ninjaType;
+resultContainer.style.display = 'block'; //makes the result visible
+
+});
+
+function determineNinjaType(foodChoices, eyes, clan, medical, sibling) {
+  if (foodChoices.includes("foodPill") && eyes === "no" && clan === "no" && medical === "yes" && sibling === "no") {
+    return "Sakura Haruno";
+  } else if (foodChoices.includes("ramen") && eyes === "no" && clan === "yes" && medical === "no" && sibling === "no") {
+    return "Naruto Uzumaki!";
+  } else if (foodChoices.includes("tomato") && eyes === "yes" && clan === "yes" && medical === "no" && sibling === "yes") {
+    return "Sasuke Uchiha!"; 
+  } else {
+  return "A Versatile Ninja!";
+}
+}
+
+
+console.log(foodChoices, eyes, clan, medical, sibling);
+
+</script>
+
+</body>
+</html>

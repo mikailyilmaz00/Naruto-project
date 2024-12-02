@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/profile.css">
+    <title>ShinobiWorld</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <body>
+        
+        <nav class="navbar">
+            <a href="homepage.html">Home</a>
+            <a href="Quiz.html">Quiz</a>
+            <a href="minigames.html">Missions</a>
+            <a href="login.html">Login</a>
+        </nav>
+        <ul>
+            <li class="username">Username</li>
+        </ul>
+        <div id="profile">
+            <table>
+                <thead
+                <tr>
+                    <th> Username</th>
+                    <th> Rank</th>
+                    <th>Points</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                  <td>Abidal</td> 
+                  <td>1</td>
+                  <td>10xp</td>
+                </tr>
+                <tr>
+                  <td>Luka</td>
+                  <td>50</td>
+                  <td>1500xp</td>
+                </tr>
+                <tr>
+                  <td>Sebastian433</td>
+                  <td>3</td>
+                  <td>56xp</td>
+                </tr> 
+            <p>Username: <span id="username"></span></p>
+            <p>Rank: <span id="rank"></span></p>
+            <p>Points: <span id="points"></span></p>
+        </div>
+        <p>Points needed for next rank: <span id="next-rank-points"></span></p>
+        
+        <div class="welcome-message">
+            <h1>Welcome home, <span id="username">Shinobi</span>!</h1>
+        </div>
+        
+        <div id="profile">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Rank</th>
+                        <th>Points</th>
+                    </tr>
+                </thead>
+                <tbody id="user-table">
+                    <!-- Rows will be dynamically updated -->
+                </tbody>
+            </table>
+        </div>
+        
+       <!---- <p>Points needed for next rank: <span id="next-rank-points"></span></p> -->
+        
+        <script>
+            fetch('/api/profile')
+                .then((response) => response.json())
+                .then((profile) => {
+                    document.getElementById('username').textContent = profile.username;
+                    document.getElementById('rank').textContent = profile.user_rank;
+                    document.getElementById('points').textContent = profile.user_points;
+                    document.getElementById('next-rank-points').textContent = profile.pointsForNextRank;
+        
+                    const userTable = document.getElementById('user-table');
+                    profile.leaderboard.forEach((user) => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `<td>${user.username}</td><td>${user.rank}</td><td>${user.points}</td>`;
+                        userTable.appendChild(row);
+                    });
+                })
+                .catch((error) => console.error('Error fetching profile:', error));
+        </script>
+        <script>
+
+        document.getElementById('next-rank-points').textContent = profile.pointsForNextRank;
+
+        
+    const progress = (currentPoints / pointsForNextRank) * 100;
+            document.getElementById('rank').textContent = profile.rank
+            document.getElementById('rank').addEventListener('click', () => {
+
+            })
+
+    setInterval(() => {
+        fetch('/api/profile')
+        .then(response => response.json())
+        .then(data => {
+            // insert and update points and rank display based on new data
+        });
+    }, 5000); // poll every 5 secs
+
+    document.getElementById('feedbackForm').addEventListener('submit', (event) => {
+    event.preventDefault();
+    // Capture form data and send it to the backend
+});
+if (points >= nextRankPoints - 10) {
+    message.textContent = "Almost there!";
+}
+
+const name = '';
+document.getElementById('Username').textContent = username;
+
+    </script>
+</body>
+</html>
