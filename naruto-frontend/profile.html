@@ -14,9 +14,7 @@
             <a href="minigames.html">Missions</a>
             <a href="login.html">Login</a>
         </nav>
-        <ul>
-            <li class="username">Username</li>
-        </ul>
+     
         <div id="profile">
             <table>
                 <thead
@@ -42,32 +40,14 @@
                   <td>3</td>
                   <td>56xp</td>
                 </tr> 
-            <p>Username: <span id="username"></span></p>
-            <p>Rank: <span id="rank"></span></p>
-            <p>Points: <span id="points"></span></p>
+            
         </div>
-        <p>Points needed for next rank: <span id="next-rank-points"></span></p>
+        <p>Points needed for next rank: ... <span id="next-rank-points"></span></p>
         
         <div class="welcome-message">
             <h1>Welcome home, <span id="username">Shinobi</span>!</h1>
         </div>
-        
-        <div id="profile">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Username</th>
-                        <th>Rank</th>
-                        <th>Points</th>
-                    </tr>
-                </thead>
-                <tbody id="user-table">
-                    <!-- Rows will be dynamically updated -->
-                </tbody>
-            </table>
-        </div>
-        
-       <!---- <p>Points needed for next rank: <span id="next-rank-points"></span></p> -->
+       
         
         <script>
             fetch('/api/profile')

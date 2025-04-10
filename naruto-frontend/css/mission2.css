@@ -4,36 +4,35 @@ body {
 
 
 #gameArea {
-    width: 750px;
-    height: 300px;
+    position: relative;
+    width: 800px;
+    height: 400px;
     border: 2px solid black;
-    margin: auto;
+    margin: 400px auto; 
     background: url('../images/ramenshop.jpg') center/cover no-repeat;
     background-size: cover;
 
 }
 
 #naruto {
-    position: relative;
-    height: 100px;
+    position: absolute;
+    height: 110px;
     width: 40px;
-    top: 350px;
-    left: 500px;
+    top: 240px;
+    left: 2%;
     background-image: url('../images/pngimg.com\ -\ naruto_PNG40.png');
     background-size: cover; 
    
 }
 
 
-
-
 #ramenBowl {
-position: relative;
+position: absolute;
 color: white;
-height: 45px;
+height: 35px;
 width: 45px;
-top: 175px;
-left: 1030px;
+top: 190px;
+left: 20px;
 background-image: url('../images/ramenbowl.png');
 background-size: cover;
 /* animation: ramen 2.3s infinite; */
@@ -74,12 +73,16 @@ animation: drop 2s infinite;
     }
     
     @keyframes drop {
-        0%{left: 445px;}
-        50%{right: 75px;}
-        100%{right: 225px;}
+        0%{left: 150px;}
+        50%{left: calc(80% - 60px);}
+        100%{left: 150px;}
         
 }
 
 #score {
     text-align: center;
+    font-size: 3em; 
+    color: #0c0b0a; 
+    margin-top: -7%;
+    margin-bottom: 50px; 
 }

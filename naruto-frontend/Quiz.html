@@ -4,26 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The ultimate Shinobi quiz</title>
-    <link rel="stylesheet" href="p5.css">
+    <link rel="stylesheet" href="quiz.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
     <script src="sketch.js" defer></script>
 </head>
 <body>
-    <header>
-        <h1>Quiz of the day</h1>
-        <p>Click anywhere to start today's quiz!</p>
+    <header id="header">
+      <h1 id="quizTitle">Quiz &amp; Match</h1>
+      <p id="quizPrompt">Click anywhere to start the quiz &amp; match!</p>
     </header>
-    <main>
-        <div id="content"></div>
+    <main id="mainContainer">
+      <div id="content"></div>
     </main>
 
     <script>
+        const score = document.getElementById('score');
+
+
         let items = ["Uchiha clan", "Pain", "Naruto", "Boruto"];
         let quizQuestions = [
-            { question: "Which clan has the sharingan?" },
-            { question: "'This world shall know ...?" },
-            { question: "Which character always says 'Dattebayo'?" },
-            { question: "Which character says dattebasa?" },
+            { question: "Which clan has the sharingan?", answer: "Uchiha clan" },
+            { question: "'This world shall know ...?", answer: "Pain" },
+            { question: "Which character always says 'Dattebayo'?", answer: "Naruto" },
+            { question: "Which character says dattebasa?", answer: "Boruto" },
         ];
         let floatingQuestions = [];
         let floatingAnswers = [];
@@ -31,14 +34,16 @@
         let questionStartTime = 0;
         let questionDuration = 10000; // 10 seconds for each question
         let questionAnswered = false;
-        let currentQuestionIndex = 0; // Start with the first question
-        let correctConnections = 0; // Track how many correct connections are made
+        let currentQuestionIndex = 0; // starts with the first question
+        let correctConnections = 0; // tracks how many correct connections are made
 
         function setup() {
-            createCanvas(windowWidth, windowHeight);
+           let cnv = createCanvas(5100, 2400);
+           cnv.parent('content'); // attaches the canvas to the content div
+            background(200);
             textAlign(CENTER, CENTER);
 
-            // Create floating questions and answers
+            // creates floating questions and answers
             for (let i = 0; i < quizQuestions.length; i++) {
                 floatingQuestions.push({
                     ...quizQuestions[i],
@@ -56,7 +61,7 @@
                 });
             }
 
-            // Create floating items
+            // creates floating items
             for (let i = 0; i < items.length; i++) {
                 floatingItems.push({
                     name: items[i],
@@ -71,44 +76,56 @@
         function draw() {
             background(200);
 
-            // Display floating questions
+            // displays timer
+            if (questionStartTime > 0 && !questionAnswered) {
+                let remainingTime = max(0, (questionDuration - (millis() - questionStartTime)) / 1000);
+                fill(0);
+                textSize(24);
+                text(`Time: ${remainingTime.toFixed(1)}s`, width - 100, 30);
+                if (remainingTime <= 0) {
+                    moveToNextQuestion();
+                }
+            }
+
+            // displays floating questions
             fill(0);
-            textSize(20);
+            textSize(24);
+            text(`Score: ${correctConnections}`, width - 100, 30);
             for (let i = 0; i < floatingQuestions.length; i++) {
                 text(floatingQuestions[i].question, floatingQuestions[i].x, floatingQuestions[i].y);
                 floatingQuestions[i].x += floatingQuestions[i].dx;
                 floatingQuestions[i].y += floatingQuestions[i].dy;
 
-                // Bounce off edges
+                // bounces off edges
                 if (floatingQuestions[i].x > width || floatingQuestions[i].x < 0) floatingQuestions[i].dx *= -1;
                 if (floatingQuestions[i].y > height || floatingQuestions[i].y < 0) floatingQuestions[i].dy *= -1;
             }
 
-            // Display floating answers
-            for (let i = 0; i < floatingAnswers.length; i++) {
-                textSize(16);
-                text(floatingAnswers[i].answer, floatingAnswers[i].x, floatingAnswers[i].y);
-                floatingAnswers[i].x += floatingAnswers[i].dx;
-                floatingAnswers[i].y += floatingAnswers[i].dy;
+            // displays floating answers
+            // for (let i = 0; i < floatingAnswers.length; i++) {
+            //     textSize(16);
+            //     text(floatingAnswers[i].answer, floatingAnswers[i].x, floatingAnswers[i].y);
+            //     floatingAnswers[i].x += floatingAnswers[i].dx;
+            //     floatingAnswers[i].y += floatingAnswers[i].dy;
 
-                // Bounce off edges
-                if (floatingAnswers[i].x > width || floatingAnswers[i].x < 0) floatingAnswers[i].dx *= -1;
-                if (floatingAnswers[i].y > height || floatingAnswers[i].y < 0) floatingAnswers[i].dy *= -1;
-            }
+            //     // bounces off edges
+            //     if (floatingAnswers[i].x > width || floatingAnswers[i].x < 0) floatingAnswers[i].dx *= -1;
+            //     if (floatingAnswers[i].y > height || floatingAnswers[i].y < 0) floatingAnswers[i].dy *= -1;
+            // }
 
-            // Display floating items
+            // displays floating items
             for (let i = 0; i < floatingItems.length; i++) {
                 textSize(20);
                 text(floatingItems[i].name, floatingItems[i].x, floatingItems[i].y);
                 floatingItems[i].x += floatingItems[i].dx;
                 floatingItems[i].y += floatingItems[i].dy;
 
-                // Bounce off edges
+                // bounces off edges
                 if (floatingItems[i].x > width || floatingItems[i].x < 0) floatingItems[i].dx *= -1;
                 if (floatingItems[i].y > height || floatingItems[i].y < 0) floatingItems[i].dy *= -1;
             }
 
-            // Display timer countdown
+            // displays timer countdown
             if (questionStartTime > 0 && !questionAnswered) {
                 let elapsed = int((millis() - questionStartTime) / 1000);
                 let remainingTime = max(0, (questionDuration - (millis() - questionStartTime)) / 1000);
@@ -116,13 +133,13 @@
                 textSize(24);
                 text(`Time: ${remainingTime.toFixed(1)}s`, width - 100, 30);
 
-                // Check if time runs out
+                // checks if time runs out
                 if (remainingTime <= 0) {
                     moveToNextQuestion();
                 }
             }
 
-            // Show a message when all questions are answered
+            // shows a message when all questions are answered
             if (correctConnections === quizQuestions.length) {
                 fill(0, 255, 0);
                 textSize(32);
@@ -131,34 +148,39 @@
         }
 
         function mousePressed() {
-            // Check if the user clicked any floating item or question
+            // checks if the user clicked any floating item or question
             for (let i = 0; i < floatingItems.length; i++) {
                 if (dist(mouseX, mouseY, floatingItems[i].x, floatingItems[i].y) < 50) {
-                    // Check if the selected item matches the question
+                    // checks if the selected item matches the question
                     let currentQuestion = quizQuestions[currentQuestionIndex];
-                    if (floatingItems[i].name === currentQuestion.answer) {
+                    if (floatingItems[i].name.trim().toLowerCase() === currentQuestion.answer.trim().toLowerCase()) {
                         correctConnections++;
+                        // if user answers correctly, update the score
+                        score.innerText = correctConnections;
                         alert("Correct! Well done!");
                         moveToNextQuestion();
+                        return;
+                    } else {
+                        alert("Wrong answer! Try again.");
                     }
                 }
             }
 
             for (let i = 0; i < floatingQuestions.length; i++) {
                 if (dist(mouseX, mouseY, floatingQuestions[i].x, floatingQuestions[i].y) < 50) {
-                    // Set the current question to selected one
+                    // sets the current question to selected one
                     currentQuestionIndex = i;
-                    questionStartTime = millis(); // Start the timer
-                    questionAnswered = false; // Reset the answered state
+                    questionStartTime = millis(); // starts the timer
+                    questionAnswered = false; // resets the answered state
                 }
             }
         }
 
         function moveToNextQuestion() {
-            // Move to the next question
-            currentQuestionIndex = (currentQuestionIndex + 1) % quizQuestions.length; // Loop back to the first question after the last one
-            questionStartTime = 0; // Reset the timer
-            questionAnswered = false; // Reset the answered state
+            // moves to the next question
+            currentQuestionIndex = (currentQuestionIndex + 1) % quizQuestions.length; // loops back to the first question after the last one
+            questionStartTime = 0; // resets the timer
+            questionAnswered = false; // resets the answered state
         }
     </script>
 </body>

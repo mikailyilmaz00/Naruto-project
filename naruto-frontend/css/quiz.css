@@ -1,32 +1,51 @@
-body {
+html, body {
+    height: 100%;
     margin: 0;
+  }
+  
+  body {
     font-family: Arial, sans-serif;
     background-color: #282c34; 
-    color: #ffffff; /* White text for contrast */
-    height: 100%;
-    overflow: hidden; /* Prevent scrolling */
-}
-
-header {
+    color: #ffffff; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; 
+  }
+  
+  #header {
     text-align: center;
     padding: 20px;
-    background-color: #3a3f47; /* Lighter dark color for header */
+    background-color: #3a3f47; 
     color: #ffffff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); 
-    position: fixed; 
-    width: 100%; 
-    z-index: 1000; 
-}
-
-main {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    font-size: 1.7em;
+    margin-bottom: 20px;
+  }
+  
+  /* Main container for canvas (quiz content) */
+  #mainContainer {
+    width: 800px;
+    height: 600px;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%; /* Full viewport height */
-    margin-top: 80px; 
-    overflow: hidden; /* Prevent scrolling */
-}
-
-canvas {
+  }
+  
+  /* Content div to host the canvas */
+  #content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Optional canvas styling */
+  canvas {
     border: 1px solid #ffffff; 
-}
+    display: block;
+    margin: 0 auto;
+  }

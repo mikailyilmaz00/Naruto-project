@@ -8,13 +8,11 @@
 </head>
 <body>
 
-    <div id="naruto" class="jump-animation"></div>
-
-
-    <div id="ramenBowl"></div>
-    <div id="gameArea"></div>
- <h1 id="score">0</h1>
-
+    <div id="gameArea">
+        <div id="naruto" class="jump-animation"></div>
+        <div id="ramenBowl"></div>
+    </div>
+    <h1 id="score">0</h1>
 
 
 
@@ -66,6 +64,25 @@ document.addEventListener('keydown', (event) => {
 //         jump();
 //     }
 // })
+
+function checkCollision() {
+    const narutoRect = naruto.getBoundingClientRect();
+    const bowlRect = ramenBowl.getBoundingClientRect();
+
+    // checks if Naruto and the bowl overlap
+    if (
+        narutoRect.right > bowlRect.left &&
+        narutoRect.left < bowlRect.right &&
+        narutoRect.bottom > bowlRect.top &&
+        narutoRect.top < bowlRect.bottom
+    ) {
+        // updates score when collision occurs
+        score.innerText = parseInt(score.innerText) + 1;
+    }
+}
+
+// checks for collision every 100ms
+setInterval(checkCollision, 100);
 
 
     </script>
