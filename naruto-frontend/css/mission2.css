@@ -41,16 +41,6 @@ animation: drop 2s infinite;
 }
 
 
-
-
-/* @keyframes jump {
-    0% {top: 350px;} 
-    50% {top: 75px}
-    75% {top: 75px}
-    100% {top: 350px;}
-    
-} */
-
 /* .drop.animation {
     animation: drop 0.5s;
     } */

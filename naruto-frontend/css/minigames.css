@@ -45,7 +45,7 @@ body {
     max-width: 1200px;
     margin: 50px auto;
     padding: 150px;
-    border: 2px solid #ffe082; /* amber */
+    border: 2px solid #ffe082; 
     border-radius: 10px;
     background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(4px);

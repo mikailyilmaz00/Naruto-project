@@ -90,7 +90,7 @@ table tr:hover {
 
 th, td {
     border: 1px solid #ddd;
-    padding: 15px; /* increased padding for larger boxes */
+    padding: 15px; 
 }
 
 th {
