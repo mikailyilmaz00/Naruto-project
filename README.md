@@ -1,4 +1,4 @@
-Key Features
+Key Features explained down below.
 User Accounts & Profiles:
 
 Create accounts and log in with authentication using securely hashed passwords.
